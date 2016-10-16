@@ -55,4 +55,8 @@ public protocol IPieChartDataSet: IChartDataSet
     
     /// the color for the slice-text labels
     var entryLabelColor: NSUIColor? { get set }
+    
+    // the image for the slice label
+    var valueImages: [NSUIImage] { get }
+
 }

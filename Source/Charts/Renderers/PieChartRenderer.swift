@@ -411,7 +411,7 @@ open class PieChartRenderer: DataRenderer
                     
                     if dataSet.valueLineColor != nil
                     {
-                        context.setStrokeColor(dataSet.valueLineColor!.cgColor)
+                        context.setStrokeColor(dataSet.colors[j].cgColor)
                         context.setLineWidth(dataSet.valueLineWidth)
                         
                         context.move(to: CGPoint(x: pt0.x, y: pt0.y))
@@ -423,14 +423,19 @@ open class PieChartRenderer: DataRenderer
                     
                     if drawXOutside && drawYOutside
                     {
-                        ChartUtils.drawText(
-                            context: context,
-                            text: valueText,
-                            point: labelPoint,
-                            align: align,
-                            attributes: [NSFontAttributeName: valueFont, NSForegroundColorAttributeName: valueTextColor]
-                        )
-                        
+                        if dataSet.valueImages.count > 0 {
+                            let image = dataSet.valueImages[j]
+                            image.draw(in: CGRect(x: labelPoint.x - image.size.width/2, y: labelPoint.y, width: image.size.width, height: image.size.height))
+                        } else {
+                            ChartUtils.drawText(
+                                context: context,
+                                text: valueText,
+                                point: labelPoint,
+                                align: align,
+                                attributes: [NSFontAttributeName: valueFont, NSForegroundColorAttributeName: valueTextColor]
+                            )
+                        }
+
                         if j < data.entryCount && pe?.label != nil
                         {
                             ChartUtils.drawText(
